@@ -7,8 +7,8 @@ provider:
   region: eu-central-1
   environment:
     DEBUG: "*"
-    PAGE_LOAD_TIMEOUT: 20000
-    LOGGING: true
+    PAGE_LOAD_TIMEOUT: "20000"
+    LOGGING: "true"
 
 plugins:
   - serverless-plugin-chrome

@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: 'SAM template for Serverless framework service: '
+Resources:
+  WeckyCapture:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: src/handlers/screenshot.default
+      Runtime: nodejs6.10
+      CodeUri: .serverless/serverless-chrome-screenshot.zip
+      Description: Headless Chrome Screenshot
+      MemorySize: 1536
+      Timeout: 30
+      Environment:
+        Variables:
+          DEBUG: '*'
+          PAGE_LOAD_TIMEOUT: 20000
+          LOGGING: true
+          S3_LOCAL: ''
+      Events:
+        NewHash:
+          Type: DynamoDB
+          Properties:
+            Stream: arn:aws:dynamodb:us-east-1:123456789012:table/TestTable/stream/2016-08-11T21:21:33.291
+            StartingPosition: LATEST
+            BatchSize: 10
