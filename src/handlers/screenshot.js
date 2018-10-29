@@ -1,7 +1,15 @@
 import log from '../utils/log'
 import screenshot from '../chrome/screenshot'
 var AWS = require("aws-sdk");
-var s3 = new AWS.S3();
+if (process.env.S3_LOCAL && process.env.S3_LOCAL.length > 0) {
+  var s3 = new AWS.S3({
+	endpoint: 'http://host.docker.internal:4572/',
+	s3BucketEndpoint: false,
+	s3ForcePathStyle: true
+  	});
+} else {
+  var s3 = new AWS.S3();
+}
 
 export default async function handler (event, context, callback) {
   event.Records.forEach(async (record) => {
